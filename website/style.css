@@ -1,111 +1,151 @@
-body{
-    background: #fffff8;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+
+:root {
+    --primary-blue: #0072BB;
+    --light-blue: #87ceeb;
+    --button-hover-blue: #005bb5;
+    --white: #ffffff;
+    --light-grey: #cccccc;
+    --gray: #6E7A76;
+    --dark-grey: #333333;
+    --very-light-grey: #f5f5f5;
 }
 
-#app{
+/* General Body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Oswald', sans-serif;
+    background: linear-gradient(to bottom, var(--primary-blue), var(--white));
+    color: var(--dark-grey);
+    text-align: center;
+}
+
+/* Container */
+#app {
     display: grid;
-    grid-auto-rows: minmax(150px, auto);
-    /* grid-template-columns:  */
-    height:100vh;
-    background: #f23557;
-    color: #f0d43a;
+    grid-template-rows: auto auto auto auto;
     justify-content: center;
     grid-gap: 1em;
-    font-size: 20px;
+    padding: 20px;
+}
+
+/* Headline */
+.headline h1 {
+    font-size: 3rem;
+    color: var(--white);
+    text-shadow: 2px 2px 5px var(--dark-grey);
+}
+
+/* Title Styling */
+.title {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: var(--primary-blue); 
+}
+
+/* Input and Textarea */
+input,
+textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid var(--gray);
+    font-size: 1rem;
+    background: var(--light-blue);
+    color: var(--dark-grey);
     font-family: 'Oswald', sans-serif;
 }
 
-.holder{
-
-}
-
-.entry{
-    background: rgba(59, 74, 107, .4);
-}
-
-#entryHolder{
-
-}
-
-#date{
-
-}
-
-#temp{
-
-}
-
-#content{
-
-}
-
-.headline {
-
-}
-.title{
-
-}
-
-/*  Basic Styling To Override Default For Basic HTML Elements */
-label{
-    display:block;
-    font-size: 27px;
-}
-
-input{
-    display:block;
-    height: 60px;
-    width: 320px;
-    background:#22b2da;
-    color: #f0d43a;
-    font-size: 20px;
+/* Input and Textarea Placeholder */
+::placeholder {
+    color: var(--dark-grey);
     font-family: 'Oswald', sans-serif;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    max-width: 420px;
+    padding: 15px;
+    font-size: 1.5rem;
     border: none;
+    border-radius: 8px;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    box-shadow: 2px 4px 5px var(--dark-grey);
+    cursor: pointer;
 }
 
-button{
-    width: 400px;
+button:hover {
+    background-color: var(--button-hover-blue);
+}
+
+/* Labels */
+label {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    display: block;
+    color: var(--white); 
+}
+
+/* Entry Section */
+.entry {
+    color: var(--dark-grey);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#entryHolder div {
+    margin: 10px 0;
+    font-size: 1.2rem;
+}
+
+.container {
+    display: flex;
+    gap: 10px;
+}
+
+.entryHolder {
+    flex: 1;
+}
+
+.weather-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    max-width: 300px;
+    flex: 1;
+}
+
+.weather-summary img {
+    width: 100px;
     height: 100px;
-    background: #3b4a6b;
-    color: #f0d43a;
-    font-size: 26px;
-    font-family: 'Oswald', sans-serif;
-    border: none;
-    box-shadow: 2px 4px 5px #444;
-}
-h1{
-    font-size: 36px;
 }
 
-textarea{
-    background:#22b2da;
-    color: #f0d43a;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
+.summary-header {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary-blue);
+    margin: 10px 0;
 }
-/* Reset style for HTML element on active to have no border*/
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
-    outline: none;
+
+.summary-temp {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 10px 0;
 }
-/* Style for Placeholder Text*/
-::placeholder { /* Firefox, Chrome, Opera */ 
-    color: #f0d43a; 
-    font-family: 'Oswald', sans-serif;
 
-} 
-  
-:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
-    color: #f0d43a; 
-    font-family: 'Oswald', sans-serif;
+.summary-description {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--dark-grey);
+}
 
-} 
-  
-::-ms-input-placeholder { /* Microsoft Edge */ 
-    color: #f0d43a; 
-    font-family: 'Oswald', sans-serif;
-
-} 
+.date-time {
+    font-size: 1rem;
+    color: var(--light-grey);
+    margin-top: 10px;
+}
