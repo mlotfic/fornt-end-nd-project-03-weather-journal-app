@@ -34,32 +34,25 @@ projectData = {};
 /**
  * GET route to retrieve all data
  */
-app.get('/all', (req, res) => {
+app.get('/allData', (req, res) => {
     res.status(200).send(projectData);
 });
 
-
-{
-    city:        weatherData.name,
-    temp:        weatherData.main.temp,
-    description: weatherData.weather[0].description,
-    feelings:    feelings,
-    date:        newDate
-};
-
-// Post Route
 /**
  * POST route to add entry
  */
-app.post('/addEntry', (req, res) => {
+app.post('/data', (req, res) => {
     projectData = {
-        city: req.body.city,
-        temp: req.body.temp,
+        city:        req.body.city,
+        temp:        req.body.temp,
         description: req.body.description,
-        feelings: req.body.feelings,
-        date: req.body.date,
+        icon:        req.body.icon,
+        feel:        req.body.feel,
+        date:        req.body.date
     };
-    res.status(200).send({ success: true, message: 'Data saved successfully.' });
+    res.status(200).send({ 
+        success: true, message: 'Data Received successfully.' 
+    });
 });
 
 
