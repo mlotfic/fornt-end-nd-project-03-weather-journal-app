@@ -1,119 +1,143 @@
-# Weather-Journal App Project
 
-# Project Title
+# **Project Setup: Weather-Journal App Project**
 
-# Quickstart/Demo
+## **Overview**
 
-# Table of Contents
+The Weather-Journal App is an asynchronous web application that allows users to record their feelings alongside real-time weather information. This app fetches weather data from the OpenWeatherMap API and updates the user interface dynamically based on user input and API responses.
 
-- [Project Title](#project-title)
-- [Quickstart/Demo](#quickstartdemo)
-- [Table of Contents](#table-of-contents)
+---
+
+## **Features**
+
+- **Weather Data Fetching**: Retrieves current weather data using the OpenWeatherMap API based on user-provided ZIP codes.
+- **User Input Integration**: Combines user feedback with weather data to create a personalized journal entry.
+- **Dynamic UI**: Displays temperature, date, and user input dynamically on the webpage.
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Development](#development)
+- [Development Details](#development-details)
+- [Project Requirements](#project-requirements)
 - [Contribute](#contribute)
 - [License](#license)
 
-# Installation
+---
+
+### **Prerequisites**
+
+Ensure you have the following installed:
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
+
+### **Installation**
+
+1. Clone this repository:
+
+   ```bash
+   git clone <repository-url>
+   cd weather-journal-app
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Acquire an API key from [OpenWeatherMap](https://openweathermap.org/).
+4. Add your API key to `app.js`:
+
+   ```javascript
+   const apiKey = '<your_api_key>&units=imperial';
+   ```
+
 [(Back to top)](#table-of-contents)
 
-# Usage
+---
+
+## **Usage**
+
+1. Start the server:
+
+   ```bash
+   node server.js
+   ```
+
+2. Open your browser and navigate to:
+
+   ```bash
+   http://localhost:<port>
+   ```
+
+   Replace `<port>` with the port number configured in `server.js` (default is usually `3000`).
+
+3. Enter a ZIP code and your feelings into the form, then click "Generate." The app will fetch the weather data and update the journal entry dynamically.
+
 [(Back to top)](#table-of-contents)
 
-# Development
+---
+
+## **Development Details**
+
+### **Technologies Used**
+
+- **Node.js**: Server-side runtime environment.
+- **Express.js**: Framework for handling server-side routes.
+- **Fetch API**: For making asynchronous requests to external APIs.
+- **HTML/CSS/JavaScript**: For the user interface.
+
+### **File Structure**
+
+```plaintext
+/weather-journal-app
+                    ├── website/
+                    │   ├── index.html       # Main HTML file
+                    │   ├── style.css        # Stylesheet
+                    │   ├── app.js           # Client-side JavaScript
+                    ├── server.js            # Server-side JavaScript
+                    ├── package.json         # Project metadata and dependencies
+```
+
 [(Back to top)](#table-of-contents)
 
-# Contribute
+### **API Integration**
+
+- The app fetches weather data from OpenWeatherMap using the provided API key.
+- Requests include user-provided ZIP codes to get location-specific data.
 [(Back to top)](#table-of-contents)
 
-# License
+---
+
+## **Project Requirements**
+
+The project is designed to meet the [Udacity Weather-Journal App rubric](https://classroom.udacity.com/).
+
+Key criteria include:
+
+- Node.js and Express environment setup.
+- Proper implementation of GET and POST routes.
+- Dynamic UI updates using Vanilla JavaScript.
 [(Back to top)](#table-of-contents)
 
-## Overview
-This project requires you to create an asynchronous web app that uses Web API and user data to dynamically update the UI. 
+---
 
-## Instructions
-This will require modifying the `server.js` file and the `website/app.js` file. You can see `index.html` for element references, and once you are finished with the project steps, you can use `style.css` to style your application to customized perfection.
+## **License**
 
-## Extras
-If you are interested in testing your code as you go, you can use `tests.js` as a template for writing and running some basic tests for your code.
+This project is licensed under the MIT License. See the LICENSE file for more details.
 
-## Glossary
+[(Back to top)](#table-of-contents)
 
-### Server-side
+---
 
-- It refers to operations performed by the server in a network.
-- In web development, we used the Server-side scripting technique to employ scripts on a web server that produces a response for each user's request.
+## **Acknowledgments**
 
-### Client-side
+- [Udacity](https://www.udacity.com/) for the project structure and guidance.
+- [OpenWeatherMap](https://openweathermap.org/) for their free API.
 
-- It refers to operations performed at the client or user's end.
-
-### Package
-
-- It is a file or directory defined by a `package.json`.
-- The npm registry contains many packages which are node modules or include node modules.
-
-### Module
-
-- Any file or directory in the `node_modules` directory that can be loaded by the `Node.js` require() function is known as a module.
-
-### Arrow function
-
-- An arrow function is a compact alternative to a traditional function expression.
-
-### HTTP Request
-
-- It is an action to be performed on a resource identified by a given request-url.
-- Some HTTP request methods are GET, POST, PUT, DELETE, etc.
-
-### GET
-
-- GET is an HTTP request method used to request data from a specified resource.
-
-### POST
-
-- POST is an HTTP request method that requests the web-server to accept the data enclosed in the body of the request message.
-
-
-Development Strategy
-For this project, you will be writing most of your code in two files: server.js and website/app.js. Note that it's very important that you plan your project before you start writing any code! Break your project down into small pieces of work and strategize your approach to each one. With these bite-sized amounts, it'll be easier to debug and fix any issues that appear.
-
-
-Feel free to implement your own design workflow, but if you get stuck -- here is a walkthrough to get you up and running!
-
-Start by setting up your project environment. Make sure Node is installed from the terminal. Install the packages Express, Body-Parser, and Cors from the terminal and include them in your server.js file.
-Create a server running on the port of your choosing
-Add a console.log() to the server callback function, and test that your server is running using Node in the terminal to run the file server.js
-Add a GET route that returns the projectData object in your server code Then, add a POST route that adds incoming data to projectData.
-The POST route should anticipate receiving three pieces of data from the request body
-temperature
-date
-user response
-Make sure your POST route is setup to add each of these values with a key to projectData.
-Acquire API credentials from OpenWeatherMap website. Use your credentials and the base url to create global variables at the top of your app.js code.
-Write an async function in app.js that uses fetch() to make a GET request to the OpenWeatherMap API.
-Create an event listener for the element with the id: generate, with a callback function to execute when it is clicked.
-Inside that callback function call your async GET request with the parameters:
-base url
-user entered zip code (see input in html with id zip)
-personal API key
-Rubric Tip: This step will help you to pass the rubric item "Integrating OpenWeatherMap API."
-After your successful retrieval of the weather data, you will need to chain another Promise that makes a POST request to add the API data, as well as data entered by the user, to your app.
-You will need to write another async function to make this POST request.
-The function should receive a path and a data object.
-The data object should include
-temperature
-date
-user response
-Remember, you can access the value of DOM elements by selecting them in your JS code.
-Finally, chain another Promise that updates the UI dynamically Write another async function that is called after the completed POST request. This function should retrieve data from our app, select the necessary elements on the DOM (index.html), and then update their necessary values to reflect the dynamic values for:
-Temperature
-Date
-User input
-Note:
-
-The body-parser has been deprecated in the latest version of Express.js (version 4.16.0 and above), the built-in middleware express.json() and express.urlencoded() are used to parse incoming request bodies. These middleware functions are based on the body-parser module and provide similar functionality.
-
-Just like the body-parser module, express.json() and express.urlencoded() also have options you can pass to customize their behavior. You can refer to the Express.js documentation(opens in a new tab) for more information on these options.
+[(Back to top)](#table-of-contents)
