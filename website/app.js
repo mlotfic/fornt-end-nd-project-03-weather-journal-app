@@ -2,11 +2,40 @@
  * Client-side JavaScript for Weather Journal App
  */
 
-// Global Variables UI
+/* Global Variables UI */
+
+// Input
 const generateBtn   = document.getElementById('generate');
 const zipInput      = document.getElementById('zip');
 const feelingsInput = document.getElementById('feelings');
-const entryHolder   = document.getElementById('entryHolder');
+
+// output
+const outputUI = {
+    currentCity        : document.getElementById("current-city"),
+    currentIcon        : document.getElementById("current-icon"),
+    currentTemp        : document.getElementById("temp"),
+    currentDescription : document.getElementById("current-description"),
+    currentDate        : document.getElementById("date"),
+    entryHolder        : document.getElementById('entryHolder'),
+    content            : document.getElementById('content')
+}
+
+/**
+ * Update UI with the most recent entry
+ */
+const updateUI = (outputUI = {}, data = {}) => {
+    // Write updated data to DOM elements
+    outputUI.currentCity.textContent        = data.city;
+    outputUI.currentTemp.textContent        = `${Math.round(data.temp)}°F`;
+    outputUI.currentDescription.textContent = data.description;
+    outputUI.content.textContent            = data.feel;
+    outputUI.currentDate.textContent        = data.date;
+
+    // icon
+    outputUI.currentIcon.src = data.icon;
+    outputUI.currentIcon.alt = data.description;
+    outputUI.currentIcon.style.display = 'block'; // Show the icon
+};
 
 // Personal API Key for OpenWeatherMap API
 const baseURL = 'https://api.openweathermap.org/data/2.5/weather';
@@ -31,50 +60,75 @@ const buildRequestURL = (baseURL, zip, apiKey) => {
 /**
  * Fetch weather data from OpenWeatherMap API
  */
-const getWeatherData = async (url, feelings, newDate) => {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error('Failed to fetch weather data.');
-    const WeatherData = await response.json();
-    // return
-    return {
-        city:        weatherData.name,
-        temp:        weatherData.main.temp,
-        description: weatherData.weather[0].description,
-        feelings:    feelings,
-        date:        newDate
-    };
+const fetchWeather = async (path, feelings, newDate) => {
+    const request = await fetch(path);
+    if (!request.ok) throw new Error('Failed to fetch OpenWeatherMap API data.');
+    const WeatherData = await request.json();
+
+    try {
+        // Transform into JSON
+        const WeatherData = await request.json()
+        // send to log
+        console.log(WeatherData)        
+        // return
+        return {
+            city:        weatherData.name,
+            temp:        weatherData.main.temp,
+            description: weatherData.weather[0].description,        
+            icon:        `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`,
+            feel:        feelings,
+            date:        newDate
+        };    
+    }
+    catch(error) {
+        console.log('Error fetching OpenWeatherMap API data:', error);
+        // appropriately handle the error
+        console.error('Error fetching OpenWeatherMap API data:', error);
+    }
 };
+
+/**
+ * Fetch data from the server on the most recent entry
+ */
+const retrieveData = async (path) => {
+    const request = await fetch(path);        
+    if (!request.ok) throw new Error('Failed to fetch data from server.');
+    try {
+        // Transform into JSON
+        const allData = await request.json()
+        // send to log
+        console.log(allData)   
+        return allData
+    }
+    catch(error) {
+        console.log('Error fetching data:', error);
+        // appropriately handle the error
+        console.error('Error fetching data:', error);
+    }
+}
 
 /**
  * Post data to server
  */
-const postData = async (url = '', data = {}) => {
-    const response = await fetch(url, {
-        method:      'POST',
-        credentials: 'same-origin',
-        headers:     { 'Content-Type': 'application/json' },
-        body:        JSON.stringify(data),
-    });
-
-    if (!response.ok) throw new Error('Failed to post data.');
-};
-
-/**
- * Update UI with the most recent entry
- */
-const updateUI = async () => {
-
-    const response = await fetch('/all');
-    
-    if (!response.ok) throw new Error('Failed to fetch data from server.');
-
-    const data = await response.json();
-
-    document.getElementById('current-city').textContent        = data.city;
-    document.getElementById('current-temp').textContent        = `${data.temp}°F`;
-    document.getElementById('current-description').textContent = data.description;
-    document.getElementById('content').textContent             = data.feelings;
-    document.getElementById('current-date-time').textContent   = data.date;
+const sendAppData = async (path = '', data = {}) => {   
+    try {
+        const response = await fetch(path, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) throw new Error('Failed to post data.');
+        // wait for server conformation message
+        const result = await response.json();
+        console.log(`Server Response: ${result.message}`);
+        return result;
+    } catch (error) {
+        console.log(`Server Response: ${error}`);
+        console.error('Error Sending data:', error);
+    }
 };
 
 /**
@@ -103,14 +157,21 @@ generateBtn.addEventListener('click', async () => {
         const newDate = getDate();
 
         // Fetch weather data via api and user inputs
-        const projectData = await getWeatherData(url, feelings, newDate);
-
-        // Post data to server
-        await postData('/addData', projectData);
-
-        // Update UI
-        updateUI();
-
+        await fetchWeather(url, feelings, newDate)
+        .then(data => {
+            sendAppData('/data', data)
+        })
+        .then(data => {
+            return retrieveData('/allData')
+        })
+        .then(temp => {
+            return {outputUI, data}
+        })
+        .then(({outputUI, data}) => updateUI(outputUI, data))
+        .catch(e => {
+            // There can be proper error handling with UI
+            console.error(e)
+        })
     // not valid zip enter
     } catch (error) {
         alert('Please enter a valid US zip-code.');
