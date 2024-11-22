@@ -22,7 +22,7 @@ const outputUI = {
 
 // Personal API Key for OpenWeatherMap API
 const baseURL = 'https://api.openweathermap.org/data/2.5/weather';
-const apiKey  = '897dfedb7128175eba21e6d714104476&units=imperial';
+const apiKey  = '<API>&units=imperial';
 
 /**
  * Rearrange .
