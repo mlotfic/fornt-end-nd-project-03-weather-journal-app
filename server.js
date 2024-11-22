@@ -34,14 +34,14 @@ projectData = {};
 /**
  * GET route to retrieve all data
  */
-app.get('/allData', (req, res) => {
+app.get('/all', (req, res) => {
     res.status(200).send(projectData);
 });
 
 /**
  * POST route to add entry
  */
-app.post('/data', (req, res) => {
+app.post('/all', (req, res) => {
     projectData = {
         city:        req.body.city,
         temp:        req.body.temp,
